@@ -4,6 +4,8 @@ import { useColorScheme } from 'react-native';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import AppTabs from '@/components/app-tabs';
+// A háttér GPS feladatot az app indulásakor kell regisztrálni.
+import '@/lib/gps-task';
 
 SplashScreen.preventAutoHideAsync();
 
