@@ -1,14 +1,16 @@
 {
   "expo": {
-    "name": "rally-app",
-    "slug": "rally-app",
+    "name": "Rally App",
+    "slug": "rallyapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "rallyapp",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "hu.rallyapp.app",
+      "supportsTablet": false
     },
     "android": {
       "adaptiveIcon": {
@@ -17,7 +19,8 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "hu.rallyapp.app"
     },
     "web": {
       "output": "server",
@@ -31,6 +34,24 @@
           "backgroundColor": "#208AEF",
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
+        }
+      ],
+      "expo-sqlite",
+      "expo-localization",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "A szakaszidő-méréshez a Rally App a háttérben is használja a helyzetedet, amíg a mérés fut. / Rally App uses your location in the background while stage timing is running.",
+          "locationWhenInUsePermission": "A szakaszidő-méréshez és a helyszínek megjelenítéséhez a Rally App használja a helyzetedet. / Rally App uses your location for stage timing and locations.",
+          "isIosBackgroundLocationEnabled": true,
+          "isAndroidBackgroundLocationEnabled": true,
+          "isAndroidForegroundServiceEnabled": true
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "A menetlevél lefényképezéséhez kell a kamera. / The camera is used to photograph time cards."
         }
       ]
     ],

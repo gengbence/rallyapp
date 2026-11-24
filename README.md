@@ -1,56 +1,46 @@
-# Welcome to your Expo app 👋
+# Rally App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Versenyző párosoknak (pilóta + navigátor) szóló mobilapp iOS-re és Androidra: bepakolási lista, időterv, helyszínek Google Maps linkkel, menetlevél fotó, GPS alapú szakaszidő, keréknyomás és futómű/gátló beállítások, csapat gyorshívó, gyors hibaelhárítási tippek.
 
-## Get started
+A termék- és műszaki terv: [Rally app – termék- és műszaki terv](https://claude.ai/artifact/WJCyJw3jjTiBL5Uv11931J)
 
-1. Install dependencies
+## Technológia
 
-   ```bash
-   npm install
-   ```
+- Expo (SDK 58), React Native, TypeScript, Expo Router
+- Offline tárolás: `expo-sqlite` kv-store (később Supabase szinkron)
+- Backend: Supabase (Postgres + RLS, Auth, Storage), séma: `supabase/migrations/`
+- GPS: `expo-location` + `expo-task-manager` háttérfeladat
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Indítás
 
 ```bash
-npm run reset-project
+npm install
+cp .env.example .env.local   # opcionális, backend nélkül is fut
+npx expo start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+A háttér GPS miatt az Expo Go nem elég, development build kell:
 
-### Other setup steps
+```bash
+npx eas-cli@latest build --profile development --platform android   # vagy ios
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Ellenőrzés
 
-## Learn more
+```bash
+npm run typecheck
+npm test          # szakaszidő logika tesztjei (Node 22+)
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## Szerkezet
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+| Útvonal | Tartalom |
+| --- | --- |
+| `src/app/index.tsx` | Verseny: időterv, helyszínek, PDF kiírás, menetlevél fotó |
+| `src/app/checklist.tsx` | Bepakolási lista sablonból |
+| `src/app/timing.tsx` | GPS szakaszidő: rajt/cél kapu, mérés, eredmények |
+| `src/app/setup.tsx` | Keréknyomás és 3 utas gátló beállítások |
+| `src/app/team.tsx` | Gyorshívó és hibaelhárítási tippek |
+| `src/lib/stage-timing.ts` | Kapu-áthaladás és időmérés (tiszta logika, tesztelt) |
+| `src/lib/gps-task.ts` | Háttér helymeghatározás és mérési állapot |
+| `supabase/migrations/` | Adatbázis-séma és jogosultságok |
